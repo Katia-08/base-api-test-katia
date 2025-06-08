@@ -1,26 +1,40 @@
-@Booking
+@BookingAll
 Feature: APIS from Booking
 
   Como usuario de Booking
   Quiero obtener la lista de bookings
   Para poder verificar los detalles de los registros
 
-  @CP01_Booking
+  @CP01_Booking @Booking
   Scenario: Obtener todas los booking exitosamente
-    Given el actor establece el endpoint para obtener la lista de booking
+    Given el actor establece el endpoint de booking
     When el actor realiza una solicitud GET
     Then el codigo de respuesta debe ser 200
 
 
-  @CP02
-  Scenario Outline: Crear una aerolinea exitosamente
-    Given el actor establece el endpoint POST para crear una aerolinea
-    When el envia una solicitud HTTP POST con el "<_id>" "<name>" "<country>" "<logo>" "<slogan>" "<head_quaters>" "<website>" "<established>"
-    Then el codigo de respuesta deberia ser 200
+  @CP02_Booking @Patch_Booking @Booking
+  Scenario Outline: Crear un booking exitosamente
+    Given el actor establece el endpoint de booking
+    When el actor crea un booking con el "<firstname>" "<lastname>" "<totalprice>" "<depositpaid>" "<checkin>" "<checkout>" "<additionalneeds>"
+    Then el codigo de respuesta debe ser 200
 
     Examples:
-      | _id | name           | country | logo     | slogan                   | head_quaters | website     | established |
-      | 1   | Ramon Castilla | Lima    | lima.png | Miraflores ciudad amable | Miraflores   | flowers.com | 1857        |
-      | 3   | Alfredo Parodi | Lima    | lima.png | Centro financiero        | San Isidro   | isidro.pe   | 1931        |
+      | firstname | lastname | totalprice | depositpaid | checkin    | checkout   | additionalneeds |
+      | Mario     | Castilla | 111        | true        | 2018-01-01 | 2019-01-01 | Breakfast       |
+      #| Roberto   | Alfredo  | 222        | true        | 2018-01-01 | 2019-01-01 | Breakfast       |
+
+
+  @CP03_Booking @Patch_Booking @Booking
+
+  Scenario Outline: Actualizar datos de un booking exitosamente
+    Given el actor establece el endpoint de booking
+    And el actor crea un booking con el "Ada" "Wong" "111" "true" "checkin" "checkout" "Run"
+    When el actor actualiza un booking con los datos "<firstname>" "<lastname>" "<totalprice>"
+    Then el codigo de respuesta debe ser 200
+
+    Examples:
+      | firstname | lastname  | totalprice |
+      | Carlos    | Alcantara | 999        |
+
 
 

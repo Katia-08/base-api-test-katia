@@ -2,6 +2,10 @@ package com.nttdata.testing.stepDefinitions;
 
 import com.nttdata.testing.questions.ResponseCode;
 import com.nttdata.testing.tasks.GetAllBookings;
+import com.nttdata.testing.tasks.PatchBooking;
+import com.nttdata.testing.tasks.PostBooking;
+import com.nttdata.testing.tasks.PostToken;
+import io.cucumber.datatable.DataTable;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -20,13 +24,14 @@ import static org.hamcrest.CoreMatchers.equalTo;
 public class BookingStepDefinition {
 
     public static Logger LOGGER = LoggerFactory.getLogger(BookingStepDefinition.class);
+
     @Before
     public void setTheStage() {
         OnStage.setTheStage(new OnlineCast());
     }
 
-    @Given("el {actor} establece el endpoint para obtener la lista de booking")
-    public void elActorEstableceElEndpointParaObtenerLaListaDeBooking(Actor actor) {
+    @Given("el {actor} establece el endpoint de booking")
+    public void elActorEstableceElEndpointDeBooking(Actor actor) {
         actor.whoCan(CallAnApi.at("https://restful-booker.herokuapp.com"));
     }
 
@@ -39,4 +44,16 @@ public class BookingStepDefinition {
     public void elCodigoDeRespuestaDebeSer(int responseCode) {
         theActorInTheSpotlight().should(seeThat("El código de respuesta", ResponseCode.getStatus(), equalTo(responseCode)));
     }
+
+    @When("^el actor crea un booking con el (.*) (.*) (.*) (.*) (.*) (.*) (.*)$")
+    public void elActorCreaUnBookingConEl(String firstname, String lastname, String totalprice, String depositpaid, String checkin, String checkout, String additionalneeds) {
+        theActorInTheSpotlight().attemptsTo(PostBooking.fromPage(firstname, lastname, totalprice, depositpaid, checkin, checkout, additionalneeds));
+    }
+
+    @When("^el actor actualiza un booking con los datos (.*) (.*) (.*)$")
+    public void elActorActualizaUnBookingConLosDatos(String firstname, String lastname, String totalprice) {
+        theActorInTheSpotlight().attemptsTo(PostToken.generateToken());
+        theActorInTheSpotlight().attemptsTo(PatchBooking.fromPage(firstname, lastname, totalprice));
+    }
+
 }
