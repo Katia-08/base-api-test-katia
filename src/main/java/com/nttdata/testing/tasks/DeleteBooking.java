@@ -11,7 +11,7 @@ import static net.serenitybdd.screenplay.Tasks.instrumented;
 
 public class DeleteBooking implements Task {
 
-    private final String bookingId;
+        private final String bookingId;
     private final String token;
 
     public DeleteBooking(String bookingId) {
