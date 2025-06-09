@@ -1,10 +1,7 @@
 package com.nttdata.testing.stepDefinitions;
 
 import com.nttdata.testing.questions.ResponseCode;
-import com.nttdata.testing.tasks.GetAllBookings;
-import com.nttdata.testing.tasks.PatchBooking;
-import com.nttdata.testing.tasks.PostBooking;
-import com.nttdata.testing.tasks.PostToken;
+import com.nttdata.testing.tasks.*;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
@@ -54,6 +51,27 @@ public class BookingStepDefinition {
     public void elActorActualizaUnBookingConLosDatos(String firstname, String lastname, String totalprice) {
         theActorInTheSpotlight().attemptsTo(PostToken.generateToken());
         theActorInTheSpotlight().attemptsTo(PatchBooking.fromPage(firstname, lastname, totalprice));
+    }
+
+    // New step for PUT
+    @When("^el actor actualiza un booking usando PUT con los datos (.*) (.*) (.*)$")
+    public void elActorActualizaUnBookingUsandoPUT(String firstname, String lastname, String totalprice) {
+        theActorInTheSpotlight().attemptsTo(PostToken.generateToken());
+        // Limpiar comillas y validar que totalprice sea un número
+        String cleanedTotalPrice = totalprice.replaceAll("[\"']", "").trim();
+        try {
+            Integer.parseInt(cleanedTotalPrice);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("totalprice must be a valid number, received: " + totalprice);
+        }
+        theActorInTheSpotlight().attemptsTo(PutBooking.updateBooking(theActorInTheSpotlight().recall("bookingId"), firstname, lastname, cleanedTotalPrice));
+    }
+
+    // New step for DELETE
+    @When("^el actor elimina un booking usando DELETE$")
+    public void elActorEliminaUnBookingUsandoDELETE() {
+        theActorInTheSpotlight().attemptsTo(PostToken.generateToken());
+        theActorInTheSpotlight().attemptsTo(DeleteBooking.deleteBooking(theActorInTheSpotlight().recall("bookingId")));
     }
 
 }

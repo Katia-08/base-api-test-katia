@@ -38,3 +38,18 @@ Feature: APIS from Booking
 
 
 
+
+  @CP04_Booking @Put_Booking @Booking
+  Scenario: Actualizar un booking usando PUT
+    Given el actor establece el endpoint de booking
+    And el actor crea un booking con el "John" "Doe" "500" "true" "2023-01-01" "2023-01-05" "Breakfast"
+    When el actor actualiza un booking usando PUT con los datos "Jane" "Smith" 750
+    Then el codigo de respuesta debe ser 200
+
+
+  @CP05_Booking @Delete_Booking @Booking
+  Scenario: Eliminar un booking usando DELETE
+    Given el actor establece el endpoint de booking
+    And el actor crea un booking con el "Alex" "Johnson" "300" "true" "2023-02-01" "2023-02-07" "Lunch"
+    When el actor elimina un booking usando DELETE
+    Then el codigo de respuesta debe ser 201
