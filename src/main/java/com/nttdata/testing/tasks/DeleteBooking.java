@@ -17,6 +17,8 @@ public class DeleteBooking implements Task {
     public DeleteBooking(String bookingId) {
         this.bookingId = bookingId;
         this.token = OnStage.theActorInTheSpotlight().recall("token");
+
+
     }
 
     public static Performable deleteBooking(String bookingId) {

@@ -44,8 +44,8 @@ public class PutBooking implements Task {
 
         // Construir el cuerpo JSON usando Jackson
         Map<String, Object> bookingDates = new HashMap<>();
-        bookingDates.put("checkin", "2023-01-01");
-        bookingDates.put("checkout", "2023-01-05");
+        bookingDates.put("checkin", "2022-05-01");
+        bookingDates.put("checkout", "2022-05-15");
 
         Map<String, Object> requestBody = new HashMap<>();
         requestBody.put("firstname", firstname);

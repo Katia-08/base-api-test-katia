@@ -53,7 +53,7 @@ public class BookingStepDefinition {
         theActorInTheSpotlight().attemptsTo(PatchBooking.fromPage(firstname, lastname, totalprice));
     }
 
-    // New step for PUT
+    // Nuevo  step para PUT
     @When("^el actor actualiza un booking usando PUT con los datos (.*) (.*) (.*)$")
     public void elActorActualizaUnBookingUsandoPUT(String firstname, String lastname, String totalprice) {
         theActorInTheSpotlight().attemptsTo(PostToken.generateToken());
@@ -67,7 +67,7 @@ public class BookingStepDefinition {
         theActorInTheSpotlight().attemptsTo(PutBooking.updateBooking(theActorInTheSpotlight().recall("bookingId"), firstname, lastname, cleanedTotalPrice));
     }
 
-    // New step for DELETE
+    // Nuevo  step para DELETE
     @When("^el actor elimina un booking usando DELETE$")
     public void elActorEliminaUnBookingUsandoDELETE() {
         theActorInTheSpotlight().attemptsTo(PostToken.generateToken());
