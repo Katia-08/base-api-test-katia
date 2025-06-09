@@ -24,6 +24,8 @@ Feature: APIS from Booking
       #| Roberto   | Alfredo  | 222        | true        | 2018-01-01 | 2019-01-01 | Breakfast       |
 
 
+
+
   @CP03_Booking @Patch_Booking @Booking
 
   Scenario Outline: Actualizar datos de un booking exitosamente
@@ -45,6 +47,8 @@ Feature: APIS from Booking
     And el actor crea un booking con el "Enrique" "Jose" "500" "true" "2023-01-01" "2023-01-05" "Breakfast"
     When el actor actualiza un booking usando PUT con los datos "Jane" "Smith" 750
     Then el codigo de respuesta debe ser 200
+
+
 
 
   @CP05_Booking @Delete_Booking @Booking
